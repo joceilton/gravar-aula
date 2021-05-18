@@ -1,3 +1,23 @@
 body {
     background-color: #eee;
 }
+
+a {
+	text-decoration: none;
+}
+
+.msg {
+	display: block;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.exibir {
+	display: block;
+}
+
+.ocultar {
+	display: none;
+}

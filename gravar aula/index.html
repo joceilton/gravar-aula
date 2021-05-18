@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
     <title>Hello, world!</title>
   </head>
   <body>
@@ -18,17 +20,46 @@
 
     <div class="container">
         <div class="row p-3">
-            <div class="col-6 p-3">
+            <div class="col-4 p-3">
                 <input type="date" class="form-control data" name="data" id="data">
             </div>
-            <div class="col-6 p-3">
+            <div class="col-4 p-3">
+                <input type="time" class="form-control hora" name="hora" id="hora">
+            </div>
+            <div class="col-4 p-3">
                 <input type="text" class="form-control aula" name="aula" id="aula">
             </div>
-            <div class="col-12">
+            <div class="col-12 p-3">
                 <button class="btn btn-primary form-control btnSalvar" type="button"> Salvar </button>
             </div>
             <div class="col-12">
-                <div class="alert alert-info msg ocultar"></div>
+                <div class="alert alert-info text-center msg ocultar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <p class="data-aula"></p>
+                
+                <table class="table table-bordered bg-light">
+
+                    <thead class="bg-primary text-light">
+                        <tr>
+                            <td> Data </td>
+                            <td> Hora </td>
+                            <td> Aula </td>
+                            <td> Ações </td>
+                        </tr>
+                    </thead>
+
+                    <tbody class="dados"></tbody>
+                    
+                </table>
+
+
             </div>
         </div>
     </div>
