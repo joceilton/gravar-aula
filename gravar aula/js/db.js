@@ -71,9 +71,74 @@ function carregarDados() {
 
     })
 
+    envioWhatsapp()
+
 }
 
 carregarDados()
+
+function envioWhatsapp() {
+
+    var datas = []
+
+    var dadosEnviar = []
+
+    var dadosFormatado = ""
+
+    var dataSelect
+
+    db.transaction(function(tx) {
+        tx.executeSql('SELECT * FROM aulas', [], function(tx, results) {
+
+
+            for (i = 0; i < results.rows.length; i++) {
+
+                if (datas.indexOf(results.rows[i].data) != -1) {
+
+                    console.log('incluido no array')
+
+                    var texto = encodeURIComponent("*Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n")
+
+                   dadosEnviar.push(texto)
+
+                } else {
+
+                    datas.push(results.rows[i].data)
+
+                    if (dadosEnviar.indexOf(results.rows[i].data) != -1) {
+                        console.log('Data já foi definida')
+                    } else {
+
+                        dataSelect = "https://api.whatsapp.com/send?text=" + encodeURIComponent("*" + results.rows[i].data + "*" + "\n\n")
+
+                    }
+
+                    var texto = encodeURIComponent("*Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n")
+
+                   dadosEnviar.push(texto)
+
+                }
+
+
+            }
+
+            for (i=0; i < dadosEnviar.length; i++) {
+
+                
+                    dadosFormatado += dadosEnviar[i] + encodeURIComponent("\n----------\n")
+                
+
+            }
+
+
+            $('.btn-whatsapp').attr("href", dataSelect + dadosFormatado)
+
+            
+
+        })
+    })
+
+}
 
 function editar(id) {
     db.transaction(function(tx) {
