@@ -9,6 +9,38 @@ var msg = document.querySelector('.msg')
 
 var dados = $(".dados")
 
+function pad(str, length) {
+    const resto = length - String(str).length;
+    return '0'.repeat(resto > 0 ? resto : '0') + str;
+  }
+
+//pegar data atual
+
+function dataHoraAtualFomatada(tipo) {
+    var data = new Date(),
+        dia = data.getDate(),
+        mes = data.getMonth() + 1,
+        ano = data.getFullYear(),
+        hora = data.getHours(),
+        minutos = data.getMinutes(),
+        segundos = data.getSeconds();
+
+    if (tipo == "data") {
+
+        return pad(ano, 2) + '-' + pad(mes, 2) + '-' + pad(dia, 2)
+
+    } else {
+
+        return pad(hora, 2) + ':' + pad(minutos, 2) + ':' + pad(segundos, 2)
+
+    }
+    
+}
+
+input_data.value = dataHoraAtualFomatada("data")
+
+hora.value = dataHoraAtualFomatada("hora")
+
 db.transaction(function (tx) {   
     tx.executeSql('CREATE TABLE IF NOT EXISTS aulas (id unique, data TEXT, hora TEXT, aula TEXT)'); 
  });
@@ -19,13 +51,17 @@ function carregarDados() {
 
     db.transaction(function(tx) {
 
-        tx.executeSql('SELECT * FROM aulas', [], function(tx, results) {
+        tx.executeSql('SELECT rowid, * FROM aulas', [], function(tx, results) {
 
             var len = results.rows.length
 
-            for (i = 0; i <= len; i ++) {
+            if (len <= 0) {
+                dados.prepend('<tr> <td> Não existem registros </td> </tr>')
+            }
 
-                var myHtmlContent = '<tr> <td> ' + results.rows[i].data + ' </td> <td> ' + results.rows[i].hora + ' </td> <td> ' + results.rows[i].aula + ' </td> <td> <a href="#" class="edit"> <i class="fa fa-edit"></i> </a> <a href="#" class="excluir"> <i class="fa fa-trash"></i> </a> </td> </tr>';
+            for (i = 0; i < len; i ++) {
+
+                var myHtmlContent = '<tr> <td> ' + results.rows[i].data + ' </td> <td> ' + results.rows[i].hora + ' </td> <td> ' + results.rows[i].aula + ' </td> <td> <a href="#" class="edit" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="excluir" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
 
                 dados.prepend(myHtmlContent)
 
@@ -39,24 +75,111 @@ function carregarDados() {
 
 carregarDados()
 
+function editar(id) {
+    db.transaction(function(tx) {
+        tx.executeSql('SELECT rowid,* FROM aulas WHERE rowid = "' + id + '"', [], function(tx, results) {
+            input_data.value = results.rows[0].data
+            hora.value = results.rows[0].hora
+            aula.value = results.rows[0].aula
+        })
+    })
+}
+
+function excluir(id) {
+
+    msg.innerHTML = ""
+
+    var dialogResult = "";
+    $.confirm({
+        title: 'Deletar este registro?',
+        content: 'O registro será deletado!',
+        buttons: {
+            Yes: function () {
+                dialogResult = "Sim";
+
+                msg.classList.remove('ocultar')
+
+                setTimeout(function() {
+
+                    msg.classList.add('ocultar')
+
+                }, 3000)
+
+                db.transaction(function (tx) { 
+                    tx.executeSql("DELETE FROM aulas WHERE rowid = '" + id + "'",[], 
+                    function(tx,results){msg.innerHTML = "Deletado com sucesso"},
+                    function(tx,error){msg.innerHTML = "Falha ao deletar"}
+                    );
+                })
+
+                carregarDados()
+            },
+            No: function () {
+                dialogResult = "Não";
+                msg.classList.remove('ocultar')
+
+                setTimeout(function() {
+
+                    msg.classList.add('ocultar')
+
+                }, 3000)
+                msg.innerHTML = "Ação cancelada"
+                },
+        }
+    });
+
+}
+
+$(document).on("click", ".edit", function() {
+    var id = $(this).attr("data-id")
+    editar(id)
+})
+
+$(document).on("click", ".excluir", function() {
+    var id = $(this).attr("data-id")
+    excluir(id)
+})
+
 btnDeletar.addEventListener("click", function() {
 
-    msg.classList.remove('ocultar')
+    msg.innerHTML = ""
 
-    setTimeout(function() {
+    var dialogResult = "";
+    $.confirm({
+        title: 'Deletar todos os registros?',
+        content: 'Serão deletados todos os regisros!',
+        buttons: {
+            Yes: function () {
+                dialogResult = "Sim";
 
-        msg.classList.add('ocultar')
+                msg.classList.remove('ocultar')
 
-     }, 3000)
+                setTimeout(function() {
+                   msg.classList.add('ocultar')
+                   location.reload();
+                }, 3000)
 
-    db.transaction(function (tx) { 
-        tx.executeSql("DROP TABLE aulas",[], 
-        function(tx,results){msg.innerHTML = "Deletado com sucesso"},
-        function(tx,error){msg.innerHTML = "Falha ao deletar"}
-        );
-    })
+                db.transaction(function (tx) { 
+                    tx.executeSql("DROP TABLE aulas",[], 
+                    function(tx,results){msg.innerHTML = "Deletado com sucesso"},
+                    function(tx,error){msg.innerHTML = "Falha ao deletar"}
+                    );
+                })
 
-    carregarDados()
+            },
+            No: function () {
+                dialogResult = "Não";
+                msg.classList.remove('ocultar')
+
+                setTimeout(function() {
+
+                    msg.classList.add('ocultar')
+
+                }, 3000)
+                msg.innerHTML = "Ação cancelada"
+                },
+        }
+    });
 
 })
 
