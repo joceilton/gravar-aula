@@ -14,6 +14,12 @@ function pad(str, length) {
     return '0'.repeat(resto > 0 ? resto : '0') + str;
   }
 
+//Formatar data
+function formatarData(data) {
+    var data_sep = data.split('-')
+    return data_sep[2] + '/' + data_sep[1] + '/' + data_sep[0]
+}
+
 //pegar data atual
 
 function dataHoraAtualFomatada(tipo) {
@@ -31,7 +37,11 @@ function dataHoraAtualFomatada(tipo) {
 
     } else {
 
-        return pad(hora, 2) + ':' + pad(minutos, 2) + ':' + pad(segundos, 2)
+        if (hora == '00') {
+            return '23:00'
+        } else {
+            return pad(hora, 2) - 1 + ':' + '00'
+        }
 
     }
     
@@ -61,7 +71,7 @@ function carregarDados() {
 
             for (i = 0; i < len; i ++) {
 
-                var myHtmlContent = '<tr> <td> ' + results.rows[i].data + ' </td> <td> ' + results.rows[i].hora + ' </td> <td> ' + results.rows[i].aula + ' </td> <td> <a href="#" class="edit" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="excluir" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
+                var myHtmlContent = '<tr> <td> ' + formatarData(results.rows[i].data) + ' </td> <td> ' + results.rows[i].hora + ' </td> <td> ' + results.rows[i].aula + ' </td> <td> <a href="#" class="edit" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="excluir" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
 
                 dados.prepend(myHtmlContent)
 
@@ -105,19 +115,15 @@ function envioWhatsapp() {
 
                     datas.push(results.rows[i].data)
 
-                    if (dadosEnviar.indexOf(results.rows[i].data) != -1) {
-                        console.log('Data já foi definida')
-                    } else {
+                        dataSelect = "https://api.whatsapp.com/send?text="
 
-                        dataSelect = "https://api.whatsapp.com/send?text=" + encodeURIComponent("*" + results.rows[i].data + "*" + "\n\n")
-
-                    }
-
-                    var texto = encodeURIComponent("*Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n")
+                    var texto = encodeURIComponent(encodeURIComponent("*" + formatarData(results.rows[i].data) + "*" + "\n\n" + "*Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"))
 
                    dadosEnviar.push(texto)
 
                 }
+
+                console.log(dataSelect)
 
 
             }
