@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <meta name="description" content="Gerenciador de aulas">
+    <meta name="keywords" content="gerenciador, aulas">
+    <meta name="author" content="Cicero Joceilton">
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <title> Gerenciador de aulas online </title>
+  </head>
+  <body>
+
+    <a href="#" class="btn-deletar"> <i class="fa fa-trash"></i> </a>
+
+    <a href="#" class="btn-whatsapp" target="_blank"> <i class="fab fa-whatsapp"></i> </a>
+
+    <div class="container">
+        <div class="row p-3">
+            <div class="col-12 col-md-4 p-3">
+                <input type="date" class="form-control data" name="data" id="data">
+            </div>
+            <div class="col-12 col-md-4 p-3">
+                <input type="time" class="form-control hora" name="hora" id="hora">
+            </div>
+            <div class="col-12 col-md-4 p-3">
+                <input type="text" class="form-control aula" name="aula" id="aula">
+            </div>
+            <div class="col-12 p-3">
+                <button class="btn btn-primary form-control btnSalvar" type="button"> Salvar </button>
+            </div>
+            <div class="col-12">
+                <div class="alert alert-info text-center msg ocultar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <p class="data-aula"></p>
+                
+                <table class="table table-bordered bg-light">
+
+                    <thead class="bg-primary text-light">
+                        <tr>
+                            <td> Data </td>
+                            <td> Hora </td>
+                            <td> Aula </td>
+                            <td> Ações </td>
+                        </tr>
+                    </thead>
+
+                    <tbody class="dados"></tbody>
+                    
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+    <script src="js/db.js"></script>
+
+   
+  </body>
+</html>

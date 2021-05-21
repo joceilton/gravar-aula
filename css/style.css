@@ -1,0 +1,50 @@
+body {
+    background-color: #eee;
+}
+
+a {
+	text-decoration: none;
+}
+
+a.btnAcao {
+	text-decoration: none;
+	padding: 5px;
+	display: block;
+}
+
+.msg {
+	display: block;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.bloco-btn {
+	background-color: #000;
+	padding: 10px;
+}
+
+.btn-whatsapp {
+	font-size: 20px;
+	position: fixed;
+	padding-left: 0 5px; 
+	top: 50px; 
+	left:10px;
+}
+
+.btn-deletar {
+	font-size: 20px;
+	position: fixed;
+	padding-left: 0 5px; 
+	top: 10px; 
+	left: 10px;
+}
+
+.exibir {
+	display: block;
+}
+
+.ocultar {
+	display: none;
+}
