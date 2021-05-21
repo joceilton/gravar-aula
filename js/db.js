@@ -105,7 +105,7 @@ function envioWhatsapp() {
     var texto = ""
 
     db.transaction(function(tx) {
-        tx.executeSql('SELECT * FROM aulas', [], function(tx, results) {
+        tx.executeSql('SELECT * FROM aulas ORDER BY data', [], function(tx, results) {
 
             dadosEnviar = results.rows
 
