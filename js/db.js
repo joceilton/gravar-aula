@@ -110,7 +110,7 @@ function envioWhatsapp() {
 
                     console.log('incluido no array')
 
-                    var texto = "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
+                    var texto = "✅ *" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n" + "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
 
                    dadosEnviar.push(texto)
 
