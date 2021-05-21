@@ -100,22 +100,24 @@ function envioWhatsapp() {
 
     var dataSelect
 
+    var texto = ""
+
     db.transaction(function(tx) {
-        tx.executeSql('SELECT * FROM aulas', [], function(tx, results) {
+        tx.executeSql('SELECT * FROM aulas ORDER BY data', [], function(tx, results) {
 
 
             for (i = 0; i < results.rows.length; i++) {
 
-                if (datas.indexOf(results.rows[i].data) != -1) {
+                /*if (datas.indexOf(results.rows[i].data) != -1) {
 
-                    console.log('incluido no array')
+                    console.log('incluido no array')*/
 
-
-                    var texto = "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
+                    texto = "✅ *" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n" + "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
 
                    dadosEnviar.push(texto)
 
-                } else {
+
+                /*} else {
 
                     datas.push(results.rows[i].data)
 
@@ -125,18 +127,18 @@ function envioWhatsapp() {
 
                    dadosEnviar.push(texto)
 
-                }
+                }*/
 
 
             }
 
-            for (i=0; i < dadosEnviar.length; i++) {
+            /*for (i=0; i < dadosEnviar.length; i++) {
 
                 
                 dadosFormatado += dadosEnviar[i] + "\n----------\n"
                 
 
-            }
+            }*/
 
             console.log(dadosEnviar)
 
