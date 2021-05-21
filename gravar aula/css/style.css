@@ -6,6 +6,12 @@ a {
 	text-decoration: none;
 }
 
+a.btnAcao {
+	text-decoration: none;
+	padding: 5px;
+	display: block;
+}
+
 .msg {
 	display: block;
 	width: 100%;

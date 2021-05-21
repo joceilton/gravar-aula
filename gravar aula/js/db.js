@@ -37,11 +37,9 @@ function dataHoraAtualFomatada(tipo) {
 
     } else {
 
-        if (hora == '00') {
-            return '23:00'
-        } else {
-            return pad(hora, 2) - 1 + ':' + '00'
-        }
+       
+            return pad(hora, 2) + ':' + '00'
+        
 
     }
     
@@ -49,7 +47,12 @@ function dataHoraAtualFomatada(tipo) {
 
 input_data.value = dataHoraAtualFomatada("data")
 
-hora.value = dataHoraAtualFomatada("hora")
+if (dataHoraAtualFomatada('hora') == '00') {
+    hora.value = '23:00'
+} else {
+    hora.value = dataHoraAtualFomatada("hora")
+}
+
 
 db.transaction(function (tx) {   
     tx.executeSql('CREATE TABLE IF NOT EXISTS aulas (id unique, data TEXT, hora TEXT, aula TEXT)'); 
@@ -71,7 +74,7 @@ function carregarDados() {
 
             for (i = 0; i < len; i ++) {
 
-                var myHtmlContent = '<tr> <td> ' + formatarData(results.rows[i].data) + ' </td> <td> ' + results.rows[i].hora + ' </td> <td> ' + results.rows[i].aula + ' </td> <td> <a href="#" class="edit" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="excluir" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
+                var myHtmlContent = '<tr> <td> ' + formatarData(results.rows[i].data) + ' </td> <td> ' + results.rows[i].hora + ' </td> <td> ' + results.rows[i].aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
 
                 dados.prepend(myHtmlContent)
 
@@ -107,7 +110,7 @@ function envioWhatsapp() {
 
                     console.log('incluido no array')
 
-                    var texto = encodeURIComponent("*Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n")
+                    var texto = "*Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
 
                    dadosEnviar.push(texto)
 
@@ -115,15 +118,13 @@ function envioWhatsapp() {
 
                     datas.push(results.rows[i].data)
 
-                        dataSelect = "https://api.whatsapp.com/send?text="
+                    dataSelect = "https://api.whatsapp.com/send?text="
 
-                    var texto = encodeURIComponent(encodeURIComponent("*" + formatarData(results.rows[i].data) + "*" + "\n\n" + "*Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"))
+                    var texto = "*" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n" + "*Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
 
                    dadosEnviar.push(texto)
 
                 }
-
-                console.log(dataSelect)
 
 
             }
@@ -131,13 +132,15 @@ function envioWhatsapp() {
             for (i=0; i < dadosEnviar.length; i++) {
 
                 
-                    dadosFormatado += dadosEnviar[i] + encodeURIComponent("\n----------\n")
+                dadosFormatado += dadosEnviar[i] + "\n----------\n"
                 
 
             }
 
+            console.log(dadosEnviar)
 
-            $('.btn-whatsapp').attr("href", dataSelect + dadosFormatado)
+
+            $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(dadosFormatado))
 
             
 
