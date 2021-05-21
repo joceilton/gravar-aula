@@ -100,12 +100,20 @@ function envioWhatsapp() {
 
     var dataSelect = "https://api.whatsapp.com/send?text="
 
-    var texto_inserir
+    var texto_inserir = ""
 
     var texto = ""
 
     db.transaction(function(tx) {
         tx.executeSql('SELECT * FROM aulas ORDER BY data', [], function(tx, results) {
+
+            for (i=0; i <= results.rows.length; i++) {
+                if (datas.indexOf(results.rows[1].data) <= 0) {
+                    datas.push(results.rows[i].data)
+                }
+            }
+
+            console.log(datas)
 
 
             for (i = 0; i < results.rows.length; i++) {
@@ -114,21 +122,35 @@ function envioWhatsapp() {
 
                     console.log('incluido no array')*/
 
-                    if (! dadosEnviar.includes(results.rows.data)) {
+                    /*if (dadosEnviar.indexOf(results.rows.data) === -1) {
+                        console.log('caiu aqui')*/
 
-                        texto_inserir = "✅ *" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n"
+                            if (typeof datas[i] !== "undefined") {
 
-                        texto_inserir += "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n-----------\n"
+                                texto_inserir += "✅ *" + datas[i] + "*" +  "\n-----------\n"
+
+                            }
+                            
+
+                            texto_inserir += "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n-----------\n"
+
 
                         dadosEnviar.push(texto_inserir)
 
-                    } else {
+                        console.log(texto_inserir)
+
+                    /*} else {
+
+                        console.log('e aqui tambem')
+                        console.log(dadosEnviar.indexOf(results.rows.data))
 
                         texto_inserir = "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n-----------\n"
 
                         dadosEnviar.push(texto_inserir)
 
                     }
+
+                    console.log(dadosEnviar)*/
 
 
                 /*} else {
@@ -154,10 +176,8 @@ function envioWhatsapp() {
 
             }*/
 
-            console.log(dadosEnviar)
 
-
-            $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(dadosEnviar))
+            $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
 
             
 
