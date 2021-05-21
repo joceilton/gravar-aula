@@ -92,7 +92,7 @@ carregarDados()
 
 function envioWhatsapp() {
 
-    var datas = []
+    var datas = ""
 
     var dadosEnviar = []
 
@@ -105,76 +105,28 @@ function envioWhatsapp() {
     var texto = ""
 
     db.transaction(function(tx) {
-        tx.executeSql('SELECT * FROM aulas ORDER BY data', [], function(tx, results) {
+        tx.executeSql('SELECT * FROM aulas', [], function(tx, results) {
 
-            for (i=0; i <= results.rows.length; i++) {
-                if (datas.indexOf(results.rows[1].data) <= 0) {
-                    datas.push(results.rows[i].data)
+            dadosEnviar = results.rows
+
+            for (i=0; i < dadosEnviar.length; i++) {
+
+                if (! datas.includes(dadosEnviar[i].data)) {
+                    datas += dadosEnviar[i].data + ','
+                    texto_inserir += "✅ *" + formatarData(dadosEnviar[i].data) + "*" +  "\n-----------\n"
+                    texto_inserir += "⏲️ *Hora:* " + dadosEnviar[i].hora + "\n" + "*Aula:* " + dadosEnviar[i].aula + "\n-----------\n"
+                } else {
+                    texto_inserir += "⏲️ *Hora:* " + dadosEnviar[i].hora + "\n" + "*Aula:* " + dadosEnviar[i].aula + "\n-----------\n"
                 }
             }
 
-            console.log(datas)
+            console.log(texto_inserir)
+            
 
-
-            for (i = 0; i < results.rows.length; i++) {
-
-                /*if (datas.indexOf(results.rows[i].data) != -1) {
-
-                    console.log('incluido no array')*/
-
-                    /*if (dadosEnviar.indexOf(results.rows.data) === -1) {
-                        console.log('caiu aqui')*/
-
-                            if (typeof datas[i] !== "undefined") {
-
-                                texto_inserir += "✅ *" + datas[i] + "*" +  "\n-----------\n"
-
-                            }
+            /*texto_inserir += "✅ *" + formatarData(datas[i]) + "*" +  "\n-----------\n"
                             
 
-                            texto_inserir += "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n-----------\n"
-
-
-                        dadosEnviar.push(texto_inserir)
-
-                        console.log(texto_inserir)
-
-                    /*} else {
-
-                        console.log('e aqui tambem')
-                        console.log(dadosEnviar.indexOf(results.rows.data))
-
-                        texto_inserir = "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n-----------\n"
-
-                        dadosEnviar.push(texto_inserir)
-
-                    }
-
-                    console.log(dadosEnviar)*/
-
-
-                /*} else {
-
-                    datas.push(results.rows[i].data)
-
-                    dataSelect = "https://api.whatsapp.com/send?text="
-
-                    var texto = "✅ *" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n" + "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
-
-                   dadosEnviar.push(texto)
-
-                }*/
-
-
-            }
-
-            /*for (i=0; i < dadosEnviar.length; i++) {
-
-                
-                dadosFormatado += dadosEnviar[i] + "\n----------\n"
-                
-
-            }*/
+            texto_inserir += "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n-----------\n"*/
 
 
             $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
