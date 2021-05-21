@@ -120,7 +120,7 @@ function envioWhatsapp() {
 
                     dataSelect = "https://api.whatsapp.com/send?text="
 
-                    var texto = "📅 *" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n" + "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
+                    var texto = "✅ *" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n" + "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
 
                    dadosEnviar.push(texto)
 
