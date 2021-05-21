@@ -98,7 +98,9 @@ function envioWhatsapp() {
 
     var dadosFormatado = ""
 
-    var dataSelect
+    var dataSelect = "https://api.whatsapp.com/send?text="
+
+    var texto_inserir
 
     var texto = ""
 
@@ -112,9 +114,21 @@ function envioWhatsapp() {
 
                     console.log('incluido no array')*/
 
-                    texto = "✅ *" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n" + "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
+                    if (! dadosEnviar.includes(results.rows.data)) {
 
-                   dadosEnviar.push(texto)
+                        texto_inserir = "✅ *" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n"
+
+                        texto_inserir += "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
+
+                        dadosEnviar.push(texto_inserir)
+
+                    } else {
+
+                        texto_inserir = "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
+
+                        dadosEnviar.push(texto_inserir)
+
+                    }
 
 
                 /*} else {
@@ -143,7 +157,7 @@ function envioWhatsapp() {
             console.log(dadosEnviar)
 
 
-            $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(dadosFormatado))
+            $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(dadosEnviar))
 
             
 
