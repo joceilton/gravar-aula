@@ -118,13 +118,13 @@ function envioWhatsapp() {
 
                         texto_inserir = "✅ *" + formatarData(results.rows[i].data) + "*" +  "\n-----------\n"
 
-                        texto_inserir += "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
+                        texto_inserir += "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n-----------\n"
 
                         dadosEnviar.push(texto_inserir)
 
                     } else {
 
-                        texto_inserir = "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n"
+                        texto_inserir = "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n-----------\n"
 
                         dadosEnviar.push(texto_inserir)
 
