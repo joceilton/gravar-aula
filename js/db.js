@@ -64,7 +64,7 @@ function carregarDados() {
 
     db.transaction(function(tx) {
 
-        tx.executeSql('SELECT rowid, * FROM aulas', [], function(tx, results) {
+        tx.executeSql('SELECT rowid, * FROM aulas ORDER BY data', [], function(tx, results) {
 
             var len = results.rows.length
 
