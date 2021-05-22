@@ -9,6 +9,8 @@ var msg = document.querySelector('.msg')
 
 var dados = $(".dados")
 
+var qtdAulas
+
 function pad(str, length) {
     const resto = length - String(str).length;
     return '0'.repeat(resto > 0 ? resto : '0') + str;
@@ -53,6 +55,45 @@ if (dataHoraAtualFomatada('hora') == '00') {
     hora.value = dataHoraAtualFomatada("hora")
 }
 
+$(".aula").on("keyup", function(evt) {
+    evt = evt || window.event;
+    var key = evt.keyCode || evt.which;
+    var tecla = String.fromCharCode(key); 
+    
+    if (tecla == "U" || tecla == "u") {
+        $(this).val("Unit")
+    }
+
+    if (tecla == "W" || tecla == "w") {
+        $(this).val("Warm Up")
+    }
+
+    if (tecla == "C" || tecla == "c") {
+        $(this).val("Click")
+    }
+
+    if (tecla == "O" || tecla == "o") {
+        $(this).val("Oral Test")
+    }
+
+    if (tecla == "N" || tecla == "n") {
+        $(this).val("NM")
+    }
+
+    if (tecla == "F" || tecla == "f") {
+        $(this).val("Feriado")
+    }
+
+    if (tecla == "R" || tecla == "r") {
+        $(this).val("Reunião")
+    }
+
+    if (tecla == "T" || tecla == "t") {
+        $(this).val("Teens")
+    }
+    
+})
+
 
 db.transaction(function (tx) {   
     tx.executeSql('CREATE TABLE IF NOT EXISTS aulas (id unique, data TEXT, hora TEXT, aula TEXT)'); 
@@ -68,8 +109,12 @@ function carregarDados() {
 
             var len = results.rows.length
 
+            qtdAulas = len
+
             if (len <= 0) {
                 dados.prepend('<tr> <td> Não existem registros </td> </tr>')
+            } else {
+                $(".btn-whatsapp").fadeIn('slow')
             }
 
             for (i = 0; i < len; i ++) {
@@ -109,6 +154,14 @@ function envioWhatsapp() {
 
             dadosEnviar = results.rows
 
+            if(results.rows.length <= 0) {
+                
+                $(".btn-whatsapp").fadeOut('slow')
+
+                return false
+
+            }
+
             for (i=0; i < dadosEnviar.length; i++) {
 
                 if (! datas.includes(dadosEnviar[i].data)) {
@@ -119,8 +172,6 @@ function envioWhatsapp() {
                     texto_inserir += "⏲️ *Hora:* " + dadosEnviar[i].hora + "\n" + "*Aula:* " + dadosEnviar[i].aula + "\n-----------\n"
                 }
             }
-
-            console.log(texto_inserir)
             
 
             /*texto_inserir += "✅ *" + formatarData(datas[i]) + "*" +  "\n-----------\n"
@@ -206,6 +257,21 @@ $(document).on("click", ".excluir", function() {
 btnDeletar.addEventListener("click", function() {
 
     msg.innerHTML = ""
+
+    if(qtdAulas <= 0) {
+
+        msg.classList.remove('ocultar')
+
+        setTimeout(function() {
+
+            msg.classList.add('ocultar')
+
+        }, 3000)
+        msg.innerHTML = "Sem aulas registradas"
+
+        return false
+
+    }
 
     var dialogResult = "";
     $.confirm({
