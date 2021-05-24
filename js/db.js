@@ -2,7 +2,16 @@ $(function() {
 
 //var db = openDatabase('aulas', '1.0', 'Gravando as aulas', 2 * 1024 * 1024);
 
-var db = []
+var db
+
+if (localStorage.getItem('dbAulas')) {
+    db = JSON.parse(window.localStorage.getItem('dbAulas'))
+} else {
+    db = []
+}
+
+console.log(db)
+
 
 var botao = document.querySelector('.btnSalvar')
 var btnDeletar = document.querySelector('.btn-deletar')
@@ -109,6 +118,8 @@ function carregarDados() {
 
     dados.html("")
 
+    localStorage.setItem('dbAulas', JSON.stringify(db))
+
     db.forEach(el => {
 
         if (el.data != "") {
@@ -118,6 +129,8 @@ function carregarDados() {
             dados.prepend(myHtmlContent)
 
         }
+
+        envioWhatsapp()
 
 
     })
@@ -167,6 +180,25 @@ function envioWhatsapp() {
     var texto_inserir = ""
 
     var texto = ""
+
+    db.forEach(el => {
+
+        if (! datas.includes(el.data)) {
+
+        datas += el.data + ','
+
+        texto_inserir += "✅ *" + formatarData(el.data) + "*" +  "\n-----------\n"
+        texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
+
+        } else {
+
+        texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
+
+        }
+
+    })
+
+    console.log(texto_inserir)
 
     /*db.transaction(function(tx) {
         tx.executeSql('SELECT * FROM aulas ORDER BY data', [], function(tx, results) {
@@ -323,12 +355,7 @@ btnDeletar.addEventListener("click", function() {
                    location.reload();
                 }, 3000)
 
-                db.transaction(function (tx) { 
-                    tx.executeSql("DROP TABLE aulas",[], 
-                    function(tx,results){msg.innerHTML = "Deletado com sucesso"},
-                    function(tx,error){msg.innerHTML = "Falha ao deletar"}
-                    );
-                })
+                db = []
 
             },
             No: function () {
@@ -434,6 +461,8 @@ hora.addEventListener("blur", function() {
                 aula
              })
 
+           msg.innerHTML = "Salvo com sucesso"  
+
      }
 
      db.forEach(el => {
@@ -446,9 +475,9 @@ hora.addEventListener("blur", function() {
 
             db[objIndex].aula = aula
 
-            console.log(db)
-
             verifica = false
+
+            msg.innerHTML = "Atualizado com sucesso"
 
         }
 
