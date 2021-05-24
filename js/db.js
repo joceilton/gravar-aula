@@ -13,6 +13,8 @@ var msg = document.querySelector('.msg')
 
 var dados = $(".dados")
 
+var myHtmlContent
+
 var qtdAulas
 
 function pad(str, length) {
@@ -109,10 +111,14 @@ function carregarDados() {
 
     db.forEach(el => {
 
+        if (el.data != "") {
 
-        var myHtmlContent = '<tr> <td> ' + el.data + ' </td> <td> ' + el.hora + ' </td> <td> ' + el.aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + el.id + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + el.id + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
+            myHtmlContent = '<tr> <td> ' + el.data + ' </td> <td> ' + el.hora + ' </td> <td> ' + el.aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + el.id + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + el.id + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
 
             dados.prepend(myHtmlContent)
+
+        }
+
 
     })
 
@@ -240,12 +246,20 @@ function excluir(id) {
 
                 }, 3000)
 
-                db.transaction(function (tx) { 
+                objIndex = db.findIndex(obj => obj.id == id)
+
+                console.log(objIndex)
+
+                db[objIndex].data = ""
+                db[objIndex].hora = ""
+                db[objIndex].aula = ""
+
+                /*db.transaction(function (tx) { 
                     tx.executeSql("DELETE FROM aulas WHERE rowid = '" + id + "'",[], 
                     function(tx,results){msg.innerHTML = "Deletado com sucesso"},
                     function(tx,error){msg.innerHTML = "Falha ao deletar"}
                     );
-                })
+                })*/
 
                 carregarDados()
             },
