@@ -184,7 +184,7 @@ function envioWhatsapp() {
 
             $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
             
-            alert(texto_inserir)
+           
 
             
 
