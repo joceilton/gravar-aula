@@ -1,6 +1,8 @@
 $(function() {
 
-var db = openDatabase('aulas', '1.0', 'Gravando as aulas', 2 * 1024 * 1024);
+//var db = openDatabase('aulas', '1.0', 'Gravando as aulas', 2 * 1024 * 1024);
+
+var db = []
 
 var botao = document.querySelector('.btnSalvar')
 var btnDeletar = document.querySelector('.btn-deletar')
@@ -97,15 +99,24 @@ $(".aula").on("keyup", function(evt) {
 })
 
 
-db.transaction(function (tx) {   
+/*db.transaction(function (tx) {   
     tx.executeSql('CREATE TABLE IF NOT EXISTS aulas (id unique, data TEXT, hora TEXT, aula TEXT)'); 
- });
+ });*/
 
 function carregarDados() {
 
     dados.html("")
 
-    db.transaction(function(tx) {
+    db.forEach(el => {
+
+
+        var myHtmlContent = '<tr> <td> ' + el.data + ' </td> <td> ' + el.hora + ' </td> <td> ' + el.aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + el.id + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + el.id + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
+
+            dados.prepend(myHtmlContent)
+
+    })
+
+    /*db.transaction(function(tx) {
 
         tx.executeSql('SELECT rowid, * FROM aulas ORDER BY data', [], function(tx, results) {
 
@@ -129,9 +140,9 @@ function carregarDados() {
 
         })
 
-    })
+    })*/
 
-    envioWhatsapp()
+    //envioWhatsapp()
 
 }
 
@@ -151,7 +162,7 @@ function envioWhatsapp() {
 
     var texto = ""
 
-    db.transaction(function(tx) {
+    /*db.transaction(function(tx) {
         tx.executeSql('SELECT * FROM aulas ORDER BY data', [], function(tx, results) {
 
             dadosEnviar = results.rows
@@ -176,10 +187,7 @@ function envioWhatsapp() {
             }
             
 
-            /*texto_inserir += "✅ *" + formatarData(datas[i]) + "*" +  "\n-----------\n"
-                            
-
-            texto_inserir += "⏲️ *Hora:* " + results.rows[i].hora + "\n" + "*Aula:* " + results.rows[i].aula + "\n-----------\n"*/
+            
 
 
             $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
@@ -189,18 +197,27 @@ function envioWhatsapp() {
             
 
         })
-    })
+    })*/
 
 }
 
 function editar(id) {
-    db.transaction(function(tx) {
+
+    db.forEach(el => {
+        if (el.id == id) {
+            input_data.value = el.data
+            hora.value = el.hora
+            aula.value = el.aula
+        }
+    })
+
+    /*db.transaction(function(tx) {
         tx.executeSql('SELECT rowid,* FROM aulas WHERE rowid = "' + id + '"', [], function(tx, results) {
             input_data.value = results.rows[0].data
             hora.value = results.rows[0].hora
             aula.value = results.rows[0].aula
         })
-    })
+    })*/
 }
 
 function excluir(id) {
@@ -321,7 +338,12 @@ input_data.addEventListener("change", function() {
     var data = this.value;
     var hora = document.querySelector('.hora').value
 
-    db.transaction(function (tx) { 
+
+    db.forEach(el => {
+        console.log(el.data)
+    })
+
+    /*db.transaction(function (tx) { 
 
         tx.executeSql('SELECT data, hora, aula FROM aulas WHERE data = "' + data + '" AND hora = "' + hora + '"' , [], function(tx, results) {
             if (results.rows.length == 0) {
@@ -334,7 +356,7 @@ input_data.addEventListener("change", function() {
 
             }
         })
-     })
+     })*/
 
 })
 
@@ -343,7 +365,11 @@ hora.addEventListener("blur", function() {
     var data = document.querySelector('.data').value
     var hora = this.value
 
-    db.transaction(function (tx) { 
+    db.forEach(el => {
+        console.log(el.data)
+    })
+
+    /*db.transaction(function (tx) { 
 
         tx.executeSql('SELECT data, hora, aula FROM aulas WHERE data = "' + data + '" AND hora = "' + hora + '"' , [], function(tx, results) {
             if (results.rows.length == 0) {
@@ -356,7 +382,7 @@ hora.addEventListener("blur", function() {
 
             }
         })
-     })
+     })*/
 
 })
 
@@ -374,6 +400,8 @@ hora.addEventListener("blur", function() {
      var aula = document.querySelector('.aula').value;
      var hora = document.querySelector('.hora').value;
 
+     var verifica = true
+
      if (data == "") {
         msg.classList.remove('alert-info')
         msg.classList.add('alert-warning')
@@ -381,7 +409,60 @@ hora.addEventListener("blur", function() {
         return false
      }
 
-     db.transaction(function (tx) { 
+     function gravarAula() {
+
+        var id = db.length + 1
+
+             db.push({
+                id: id,
+                data,
+                hora,
+                aula
+             })
+
+     }
+
+     db.forEach(el => {
+
+        if (el.data == data && el.hora == hora) {
+
+            objIndex = db.findIndex(obj => obj.id == el.id)
+
+            console.log(objIndex)
+
+            db[objIndex].aula = aula
+
+            console.log(db)
+
+            verifica = false
+
+        }
+
+
+    })
+
+    if (verifica) {
+        gravarAula()
+    } else {
+        console.log('ok')
+    }
+
+        /*console.log(el.id)
+
+        if (el.data == data) {
+
+            //objIndex = db.findIndex((obj => obj.id == el.id))
+
+            console.log('caiu aqui')
+
+        } else {*/
+
+
+        //}
+
+     carregarDados()
+
+     /*db.transaction(function (tx) { 
 
         tx.executeSql('SELECT data FROM aulas WHERE data = "' + data + '" AND hora = "' + hora + '"', [], function(tx, results) {
             if (results.rows.length == 0) {
@@ -408,7 +489,7 @@ hora.addEventListener("blur", function() {
         
              }
         })
-     })
+     })*/
  
  })
 
