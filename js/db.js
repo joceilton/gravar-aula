@@ -1,3 +1,5 @@
+$(function() {
+
 var db = openDatabase('aulas', '1.0', 'Gravando as aulas', 2 * 1024 * 1024);
 
 var botao = document.querySelector('.btnSalvar')
@@ -406,4 +408,6 @@ hora.addEventListener("blur", function() {
         })
      })
  
+ })
+
  })
