@@ -124,8 +124,6 @@ function carregarDados() {
                 var myHtmlContent = '<tr> <td> ' + formatarData(results.rows[i].data) + ' </td> <td> ' + results.rows[i].hora + ' </td> <td> ' + results.rows[i].aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
 
                 dados.prepend(myHtmlContent)
-                
-                alert(myHtmlContent)
 
             }
 
@@ -403,7 +401,7 @@ hora.addEventListener("blur", function() {
                     function(tx,error){msg.innerHTML = "Falha ao atualizar"}
                     );
 
-                    carregarDados()
+     
                 
         
              }
