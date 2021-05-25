@@ -122,7 +122,7 @@ function carregarDados() {
 
         if (el.data != "") {
 
-            myHtmlContent = '<tr> <td> ' + el.data + ' </td> <td> ' + el.hora + ' </td> <td> ' + el.aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + el.id + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + el.id + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
+            myHtmlContent = '<tr> <td> ' + formatarData(el.data) + ' </td> <td> ' + el.hora + ' </td> <td> ' + el.aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + el.id + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + el.id + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
 
             dados.prepend(myHtmlContent)
 
@@ -175,21 +175,49 @@ function envioWhatsapp() {
 
     var dataSelect = "https://api.whatsapp.com/send?text="
 
-    var texto_inserir = []
+    var texto_inserir = ""
 
     var texto = ""
 
-    db.forEach((el, i) => {
+    var newArray = []
 
-            
-            datas.push(el.data)
-            
+    var date_increment = []
 
-            texto_inserir .push("✅ *" + formatarData(el.data) + "*" +  "\n-----------\n" + "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n")
+    db.filter(el => {
 
+            texto_inserir += "✅ *" + formatarData(el.data) + "*" +  "\n-----------\n"
+            texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
+        
     })
 
-    texto_inserir.sort()
+    /*db.forEach((el, i) => {
+
+        if (datas.indexOf(el.data) == -1) {
+            datas.push(el.data)
+        }
+
+
+            if (datas.indexOf(el.data) == -1) {
+
+                //datas += el.data + ','
+
+                //datas.push(el.data)
+
+                texto_inserir += "✅ *" + formatarData(el.data) + "*" +  "\n-----------\n"
+                
+                texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
+
+            } else {
+
+                texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
+
+            }
+
+       
+            
+
+    })*/
+
 
     /*texto_inserir.forEach((el, i) => {
 
@@ -202,6 +230,8 @@ function envioWhatsapp() {
     });*/
 
     console.log(texto_inserir)
+
+    console.log(datas)
 
     $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
 
