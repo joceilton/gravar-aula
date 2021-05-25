@@ -10,8 +10,6 @@ if (localStorage.getItem('dbAulas')) {
     db = []
 }
 
-console.log(db)
-
 
 var botao = document.querySelector('.btnSalvar')
 var btnDeletar = document.querySelector('.btn-deletar')
@@ -169,7 +167,7 @@ carregarDados()
 
 function envioWhatsapp() {
 
-    var datas = ""
+    var datas = []
 
     var dadosEnviar = []
 
@@ -177,28 +175,35 @@ function envioWhatsapp() {
 
     var dataSelect = "https://api.whatsapp.com/send?text="
 
-    var texto_inserir = ""
+    var texto_inserir = []
 
     var texto = ""
 
-    db.forEach(el => {
+    db.forEach((el, i) => {
 
-        if (! datas.includes(el.data)) {
+            
+            datas.push(el.data)
+            
 
-        datas += el.data + ','
-
-        texto_inserir += "✅ *" + formatarData(el.data) + "*" +  "\n-----------\n"
-        texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
-
-        } else {
-
-        texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
-
-        }
+            texto_inserir .push("✅ *" + formatarData(el.data) + "*" +  "\n-----------\n" + "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n")
 
     })
 
+    texto_inserir.sort()
+
+    /*texto_inserir.forEach((el, i) => {
+
+        if (el.indexOf(count[i]) == -1) {
+            console.log("Olha: " + texto_inserir[i] + "#####################")
+        } else {
+            console.log('que houve')
+        }
+        
+    });*/
+
     console.log(texto_inserir)
+
+    $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
 
     /*db.transaction(function(tx) {
         tx.executeSql('SELECT * FROM aulas ORDER BY data', [], function(tx, results) {
@@ -223,15 +228,6 @@ function envioWhatsapp() {
                     texto_inserir += "⏲️ *Hora:* " + dadosEnviar[i].hora + "\n" + "*Aula:* " + dadosEnviar[i].aula + "\n-----------\n"
                 }
             }
-            
-
-            
-
-
-            $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
-            
-           
-
             
 
         })
@@ -280,11 +276,13 @@ function excluir(id) {
 
                 objIndex = db.findIndex(obj => obj.id == id)
 
-                console.log(objIndex)
+                if (objIndex > -1) {
 
-                db[objIndex].data = ""
-                db[objIndex].hora = ""
-                db[objIndex].aula = ""
+                    db.splice(objIndex, 1)
+
+                    msg.innerHTML = "Deletado com sucesso"
+
+                }
 
                 /*db.transaction(function (tx) { 
                     tx.executeSql("DELETE FROM aulas WHERE rowid = '" + id + "'",[], 
@@ -325,7 +323,7 @@ btnDeletar.addEventListener("click", function() {
 
     msg.innerHTML = ""
 
-    if(qtdAulas <= 0) {
+    if(db.length <= 0) {
 
         msg.classList.remove('ocultar')
 
@@ -349,13 +347,15 @@ btnDeletar.addEventListener("click", function() {
                 dialogResult = "Sim";
 
                 msg.classList.remove('ocultar')
+                db = []
+                msg.innerHTML = "Registros deletados"
 
                 setTimeout(function() {
                    msg.classList.add('ocultar')
-                   location.reload();
                 }, 3000)
 
-                db = []
+                carregarDados()
+
 
             },
             No: function () {
@@ -380,10 +380,6 @@ input_data.addEventListener("change", function() {
     var hora = document.querySelector('.hora').value
 
 
-    db.forEach(el => {
-        console.log(el.data)
-    })
-
     /*db.transaction(function (tx) { 
 
         tx.executeSql('SELECT data, hora, aula FROM aulas WHERE data = "' + data + '" AND hora = "' + hora + '"' , [], function(tx, results) {
@@ -405,10 +401,6 @@ hora.addEventListener("blur", function() {
 
     var data = document.querySelector('.data').value
     var hora = this.value
-
-    db.forEach(el => {
-        console.log(el.data)
-    })
 
     /*db.transaction(function (tx) { 
 
@@ -452,16 +444,27 @@ hora.addEventListener("blur", function() {
 
      function gravarAula() {
 
-        var id = db.length + 1
+        var id
+
+        if (db.length <= 0) {
+
+            id = 0
+
+        } else {
+
+            id = db[db.length - 1].id
+
+        }
+
 
              db.push({
-                id: id,
+                id: id + 1,
                 data,
                 hora,
                 aula
              })
 
-           msg.innerHTML = "Salvo com sucesso"  
+           msg.innerHTML = "Salvo com sucesso"
 
      }
 
@@ -470,8 +473,6 @@ hora.addEventListener("blur", function() {
         if (el.data == data && el.hora == hora) {
 
             objIndex = db.findIndex(obj => obj.id == el.id)
-
-            console.log(objIndex)
 
             db[objIndex].aula = aula
 
@@ -486,9 +487,7 @@ hora.addEventListener("blur", function() {
 
     if (verifica) {
         gravarAula()
-    } else {
-        console.log('ok')
-    }
+    } 
 
         /*console.log(el.id)
 
