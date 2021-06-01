@@ -310,7 +310,7 @@ function excluir(id) {
 
                     msg.classList.add('ocultar')
 
-                }, 3000)
+                }, 1000)
 
                 objIndex = db.findIndex(obj => obj.id == id)
 
