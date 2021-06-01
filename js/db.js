@@ -41,7 +41,7 @@ function desabilitar(campo) {
     setTimeout(function(){
         campo.prop("disabled", false);
         campo.focus()
-    }, 100)
+    }, 300)
 
 }
 
