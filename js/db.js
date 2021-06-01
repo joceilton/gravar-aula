@@ -126,11 +126,13 @@ function carregarDados() {
 
     localStorage.setItem('dbAulas', JSON.stringify(db))
 
+    if (db.length) {
+
     db.forEach(el => {
 
         if (el.data != "") {
 
-            myHtmlContent = '<tr> <td> ' + formatarData(el.data) + ' </td> <td> ' + el.hora + ' </td> <td> ' + el.aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + el.id + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + el.id + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
+            myHtmlContent = '<tr> <td> ' + formatarData(el.data) + ' </td> <td> ' + el.hora + ' </td> <td> ' + el.aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + el.id + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + el.id + '"> <i class="fa fa-trash"></i> </a> </td> </tr>'
 
             dados.prepend(myHtmlContent)
 
@@ -138,8 +140,15 @@ function carregarDados() {
 
         envioWhatsapp()
 
+        })
 
-    })
+    } else {
+
+        myHtmlContent = '<tr> <td> Nenhum registro de aulas </td> </tr>'
+
+        dados.prepend(myHtmlContent)
+
+    }
 
     /*db.transaction(function(tx) {
 
