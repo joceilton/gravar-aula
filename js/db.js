@@ -404,7 +404,7 @@ btnDeletar.addEventListener("click", function() {
 
                     msg.classList.add('ocultar')
 
-                }, 3000)
+                }, 1000)
                 msg.innerHTML = "Ação cancelada"
                 },
         }
