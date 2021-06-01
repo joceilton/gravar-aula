@@ -390,7 +390,7 @@ btnDeletar.addEventListener("click", function() {
 
                 setTimeout(function() {
                    msg.classList.add('ocultar')
-                }, 3000)
+                }, 1000)
 
                 carregarDados()
 
