@@ -40,7 +40,8 @@ function desabilitar(campo) {
     campo.prop("disabled", true);
     setTimeout(function(){
         campo.prop("disabled", false);
-    }, 1000)
+        campo.focus()
+    }, 100)
 
 }
 
