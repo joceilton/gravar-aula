@@ -72,37 +72,45 @@ $(".aula").on("keyup", function(evt) {
     evt = evt || window.event;
     var key = evt.keyCode || evt.which;
     var tecla = String.fromCharCode(key); 
+
+    if ($(this).val().length <= 1) {
     
-    if (tecla == "U" || tecla == "u") {
-        $(this).val("Unit")
-    }
+        if (tecla == "U" || tecla == "u") {
+            $(this).val("Unit")
+        }
 
-    if (tecla == "W" || tecla == "w") {
-        $(this).val("Warm Up")
-    }
+        if (tecla == "W" || tecla == "w") {
+            $(this).val("Warm Up")
+        }
 
-    if (tecla == "C" || tecla == "c") {
-        $(this).val("Click")
-    }
+        if (tecla == "C" || tecla == "c") {
+            $(this).val("Click")
+        }
 
-    if (tecla == "O" || tecla == "o") {
-        $(this).val("Oral Test")
-    }
+        if (tecla == "I" || tecla == "i") {
+            $(this).val("Intervalo")
+        }
 
-    if (tecla == "N" || tecla == "n") {
-        $(this).val("NM")
-    }
+        if (tecla == "O" || tecla == "o") {
+            $(this).val("Oral Test")
+        }
 
-    if (tecla == "F" || tecla == "f") {
-        $(this).val("Feriado")
-    }
+        if (tecla == "N" || tecla == "n") {
+            $(this).val("NM")
+        }
 
-    if (tecla == "R" || tecla == "r") {
-        $(this).val("Reunião")
-    }
+        if (tecla == "F" || tecla == "f") {
+            $(this).val("Feriado")
+        }
 
-    if (tecla == "T" || tecla == "t") {
-        $(this).val("Teens")
+        if (tecla == "R" || tecla == "r") {
+            $(this).val("Reunião")
+        }
+
+        if (tecla == "T" || tecla == "t") {
+            $(this).val("Teens")
+        }
+
     }
     
 })
@@ -457,7 +465,7 @@ hora.addEventListener("blur", function() {
 
         msg.classList.add('ocultar')
 
-     }, 3000)
+     }, 1000)
 
      var data = document.querySelector('.data').value;
      var aula = document.querySelector('.aula').value;
