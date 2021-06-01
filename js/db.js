@@ -35,6 +35,15 @@ function formatarData(data) {
     return data_sep[2] + '/' + data_sep[1] + '/' + data_sep[0]
 }
 
+function desabilitar(campo) {
+
+    campo.prop("disabled", true);
+    setTimeout(function(){
+        campo.prop("disabled", false);
+    }, 1000)
+
+}
+
 //pegar data atual
 
 function dataHoraAtualFomatada(tipo) {
@@ -68,6 +77,7 @@ if (dataHoraAtualFomatada('hora') == '00') {
     hora.value = dataHoraAtualFomatada("hora")
 }
 
+
 $(".aula").on("keyup", function(evt) {
     evt = evt || window.event;
     var key = evt.keyCode || evt.which;
@@ -76,39 +86,57 @@ $(".aula").on("keyup", function(evt) {
     if ($(this).val().length <= 1) {
     
         if (tecla == "U" || tecla == "u") {
+            var campo = $(this)
             $(this).val("Unit")
+            desabilitar(campo)
         }
 
         if (tecla == "W" || tecla == "w") {
-            $(this).val("Warm Up")
+            var campo = $(this)
+            campo.val("Warm Up")
+            desabilitar(campo)
         }
 
         if (tecla == "C" || tecla == "c") {
-            $(this).val("Click")
+            var campo = $(this)
+            campo.val("Click")
+            desabilitar(campo)
         }
 
         if (tecla == "I" || tecla == "i") {
-            $(this).val("Intervalo")
+            var campo = $(this)
+            campo.val("Intervalo")
+            desabilitar(campo)
         }
 
         if (tecla == "O" || tecla == "o") {
+            var campo = $(this)
             $(this).val("Oral Test")
+            desabilitar(campo)
         }
 
         if (tecla == "N" || tecla == "n") {
-            $(this).val("NM")
+            var campo = $(this)
+            campo.val("NM")
+            desabilitar(campo)
         }
 
         if (tecla == "F" || tecla == "f") {
-            $(this).val("Feriado")
+            var campo = $(this)
+            campo.val("Feriado")
+            desabilitar(campo)
         }
 
         if (tecla == "R" || tecla == "r") {
-            $(this).val("Reunião")
+            var campo = $(this)
+            campo.val("Reunião")
+            desabilitar(campo)
         }
 
         if (tecla == "T" || tecla == "t") {
-            $(this).val("Teens")
+            var campo = $(this)
+            campo.val("Teens")
+            desabilitar(campo)
         }
 
     }
