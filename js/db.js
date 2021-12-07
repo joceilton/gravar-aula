@@ -273,8 +273,8 @@ function envioTelegram() {
 
     db.filter(el => {
 
-            texto_inserir += "✅ *" + formatarData(el.data) + "*" +  "\n-----------\n"
-            texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
+            texto_inserir += "✅ **" + formatarData(el.data) + "**" +  "\n-----------\n"
+            texto_inserir += "⏲️ **Hora:** " + el.hora + "\n" + "**Aula:** " + el.aula + "\n-----------\n"
         
     })
 
@@ -285,7 +285,7 @@ function envioTelegram() {
     if (msg_digitada == "") {
         $('.btn-telegram').attr("href", dataSelect + encodeURIComponent(texto_inserir))
     } else {
-        $('.btn-telegram').attr("href", dataSelect + encodeURIComponent(texto_inserir + "\n\n" + "📝 *_OBS:_*" + "\n\n" + msg_digitada))
+        $('.btn-telegram').attr("href", dataSelect + encodeURIComponent(texto_inserir + "\n\n" + "📝 **__OBS:__**" + "\n\n" + msg_digitada))
     }
 
 }
