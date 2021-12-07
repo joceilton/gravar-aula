@@ -77,3 +77,9 @@ div.msg_conteudo {
 	z-index: 2;
 	display: none;
 }
+
+@media (max-width: 768px) {
+	div.container {
+		padding: 0 20px;
+	}
+}
