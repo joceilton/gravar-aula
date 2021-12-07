@@ -454,6 +454,7 @@ btnDeletar.addEventListener("click", function() {
                 dialogResult = "Sim";
 
                 msg.classList.remove('ocultar')
+                $("textarea.msg_conteudo").val("")
                 db = []
                 msg.innerHTML = "Registros deletados"
 
