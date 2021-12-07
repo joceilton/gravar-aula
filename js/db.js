@@ -24,6 +24,17 @@ var myHtmlContent
 
 var qtdAulas
 
+var msg_digitada = ""
+
+$(".btn_msg").on("click", function() {
+    $("div.msg_conteudo").slideToggle('slow')
+})
+
+$("textarea.msg_conteudo").on("keyup", function() {
+    msg_digitada = $(this).val()
+    envioWhatsapp()
+})
+
 function pad(str, length) {
     const resto = length - String(str).length;
     return '0'.repeat(resto > 0 ? resto : '0') + str;
@@ -82,7 +93,14 @@ if (dataHoraAtualFomatada('hora') == '00') {
 $(".aula").on("keyup", function(evt) {
     evt = evt || window.event;
     var key = evt.keyCode || evt.which;
-    var tecla = String.fromCharCode(key); 
+    var tecla = String.fromCharCode(key);
+
+    db.forEach(el => {
+        if (el.hora == hora.value) {
+            hora.style.border = "1px #f00 solid"
+            $(".info-text").show('slow')
+        }
+    })
 
     if ($(this).val().length <= 1) {
     
@@ -279,7 +297,11 @@ function envioWhatsapp() {
 
     console.log(datas)
 
-    $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
+    if (msg_digitada == "") {
+        $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
+    } else {
+        $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir + "\n\n" + "📝*OBS:*" + "\n\n" + msg_digitada))
+    }
 
     /*db.transaction(function(tx) {
         tx.executeSql('SELECT * FROM aulas ORDER BY data', [], function(tx, results) {
