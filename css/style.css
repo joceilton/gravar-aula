@@ -33,6 +33,14 @@ a.btnAcao {
 	left:10px;
 }
 
+.btn-telegram {
+	font-size: 20px;
+	position: fixed;
+	padding-left: 0 5px; 
+	top: 90px; 
+	left: 10px;
+}
+
 .btn-deletar {
 	font-size: 20px;
 	position: fixed;
@@ -45,7 +53,7 @@ a.btnAcao {
 	font-size: 20px;
 	position: fixed;
 	padding-left: 0 5px; 
-	top: 90px; 
+	top: 130px; 
 	left: 10px;
 	z-index: 5;
 }

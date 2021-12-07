@@ -33,6 +33,7 @@ $(".btn_msg").on("click", function() {
 $("textarea.msg_conteudo").on("keydown", function() {
     msg_digitada = $(this).val()
     envioWhatsapp()
+    envioTelegram()
 })
 
 function pad(str, length) {
@@ -195,6 +196,7 @@ function carregarDados() {
         }
 
         envioWhatsapp()
+        envioTelegram()
 
         })
 
@@ -206,37 +208,11 @@ function carregarDados() {
 
     }
 
-    /*db.transaction(function(tx) {
-
-        tx.executeSql('SELECT rowid, * FROM aulas ORDER BY data', [], function(tx, results) {
-
-            var len = results.rows.length
-
-            qtdAulas = len
-
-            if (len <= 0) {
-                dados.prepend('<tr> <td> Não existem registros </td> </tr>')
-            } else {
-                $(".btn-whatsapp").fadeIn('slow')
-            }
-
-            for (i = 0; i < len; i ++) {
-
-                var myHtmlContent = '<tr> <td> ' + formatarData(results.rows[i].data) + ' </td> <td> ' + results.rows[i].hora + ' </td> <td> ' + results.rows[i].aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + results.rows[i].rowid + '"> <i class="fa fa-trash"></i> </a> </td> </tr>';
-
-                dados.prepend(myHtmlContent)
-
-            }
-
-        })
-
-    })*/
-
-    //envioWhatsapp()
 
 }
 
 carregarDados()
+
 
 function envioWhatsapp() {
 
@@ -263,45 +239,6 @@ function envioWhatsapp() {
         
     })
 
-    /*db.forEach((el, i) => {
-
-        if (datas.indexOf(el.data) == -1) {
-            datas.push(el.data)
-        }
-
-
-            if (datas.indexOf(el.data) == -1) {
-
-                //datas += el.data + ','
-
-                //datas.push(el.data)
-
-                texto_inserir += "✅ *" + formatarData(el.data) + "*" +  "\n-----------\n"
-                
-                texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
-
-            } else {
-
-                texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
-
-            }
-
-       
-            
-
-    })*/
-
-
-    /*texto_inserir.forEach((el, i) => {
-
-        if (el.indexOf(count[i]) == -1) {
-            console.log("Olha: " + texto_inserir[i] + "#####################")
-        } else {
-            console.log('que houve')
-        }
-        
-    });*/
-
     console.log(texto_inserir)
 
     console.log(datas)
@@ -312,33 +249,44 @@ function envioWhatsapp() {
         $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir + "\n\n" + "📝 *_OBS:_*" + "\n\n" + msg_digitada))
     }
 
-    /*db.transaction(function(tx) {
-        tx.executeSql('SELECT * FROM aulas ORDER BY data', [], function(tx, results) {
+}
 
-            dadosEnviar = results.rows
 
-            if(results.rows.length <= 0) {
-                
-                $(".btn-whatsapp").fadeOut('slow')
+function envioTelegram() {
 
-                return false
+    var datas = []
 
-            }
+    var dadosEnviar = []
 
-            for (i=0; i < dadosEnviar.length; i++) {
+    var dadosFormatado = ""
 
-                if (! datas.includes(dadosEnviar[i].data)) {
-                    datas += dadosEnviar[i].data + ','
-                    texto_inserir += "✅ *" + formatarData(dadosEnviar[i].data) + "*" +  "\n-----------\n"
-                    texto_inserir += "⏲️ *Hora:* " + dadosEnviar[i].hora + "\n" + "*Aula:* " + dadosEnviar[i].aula + "\n-----------\n"
-                } else {
-                    texto_inserir += "⏲️ *Hora:* " + dadosEnviar[i].hora + "\n" + "*Aula:* " + dadosEnviar[i].aula + "\n-----------\n"
-                }
-            }
-            
+    //var dataSelect = "https://api.whatsapp.com/send?text="
+    var dataSelect = "https://telegram.me/share/url?text="
 
-        })
-    })*/
+    var texto_inserir = ""
+
+    var texto = ""
+
+    var newArray = []
+
+    var date_increment = []
+
+    db.filter(el => {
+
+            texto_inserir += "✅ *" + formatarData(el.data) + "*" +  "\n-----------\n"
+            texto_inserir += "⏲️ *Hora:* " + el.hora + "\n" + "*Aula:* " + el.aula + "\n-----------\n"
+        
+    })
+
+    console.log(texto_inserir)
+
+    console.log(datas)
+
+    if (msg_digitada == "") {
+        $('.btn-telegram').attr("href", dataSelect + encodeURIComponent(texto_inserir))
+    } else {
+        $('.btn-telegram').attr("href", dataSelect + encodeURIComponent(texto_inserir + "\n\n" + "📝 *_OBS:_*" + "\n\n" + msg_digitada))
+    }
 
 }
 
