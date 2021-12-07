@@ -59,7 +59,7 @@ a.btnAcao {
 }
 
 div.msg_conteudo {
-	background-color: #000;
+	background-color: rgba(0,0,0,0.5);
 	width: 100vw;
 	height: 50vh;
 	padding: 20px;

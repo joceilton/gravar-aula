@@ -30,7 +30,7 @@ $(".btn_msg").on("click", function() {
     $("div.msg_conteudo").slideToggle('slow')
 })
 
-$("textarea.msg_conteudo").on("keyup", function() {
+$("textarea.msg_conteudo").on("keydown", function() {
     msg_digitada = $(this).val()
     envioWhatsapp()
 })
@@ -104,7 +104,7 @@ if (dataHoraAtualFomatada('hora') == '00') {
 }
 
 
-$(".aula").on("keyup", function(evt) {
+$(".aula").on("keydown", function(evt) {
     evt = evt || window.event;
     var key = evt.keyCode || evt.which;
     var tecla = String.fromCharCode(key);
@@ -309,7 +309,7 @@ function envioWhatsapp() {
     if (msg_digitada == "") {
         $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir))
     } else {
-        $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir + "\n\n" + "📝*OBS:*" + "\n\n" + msg_digitada))
+        $('.btn-whatsapp').attr("href", dataSelect + encodeURIComponent(texto_inserir + "\n\n" + "📝 *_OBS:_*" + "\n\n" + msg_digitada))
     }
 
     /*db.transaction(function(tx) {
