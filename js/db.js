@@ -56,6 +56,20 @@ function desabilitar(campo) {
 
 }
 
+function verificaHora(h) {
+    setTimeout(function() {
+        db.forEach(el => {
+            if (el.hora == h) {
+                setTimeout(function() {
+                    hora.style.border = "1px #f00 solid"
+                }, 3000)
+            } else {
+                hora.style.border = "0"
+            }
+    })
+    }, 100)
+}
+
 //pegar data atual
 
 function dataHoraAtualFomatada(tipo) {
@@ -95,12 +109,7 @@ $(".aula").on("keyup", function(evt) {
     var key = evt.keyCode || evt.which;
     var tecla = String.fromCharCode(key);
 
-    db.forEach(el => {
-        if (el.hora == hora.value) {
-            hora.style.border = "1px #f00 solid"
-            $(".info-text").show('slow')
-        }
-    })
+    verificaHora(hora.value)
 
     if ($(this).val().length <= 1) {
     
@@ -493,6 +502,10 @@ input_data.addEventListener("change", function() {
         })
      })*/
 
+})
+
+hora.addEventListener('change', function() {
+    verificaHora(this.value)
 })
 
 hora.addEventListener("blur", function() {

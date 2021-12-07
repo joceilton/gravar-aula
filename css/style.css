@@ -50,13 +50,6 @@ a.btnAcao {
 	z-index: 5;
 }
 
-.info-text {
-	font-size: 10px;
-	color: #f00;
-	padding-left: 10px;
-	display: none;
-}
-
 .exibir {
 	display: block;
 }
