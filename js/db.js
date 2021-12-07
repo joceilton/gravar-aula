@@ -285,7 +285,7 @@ function envioTelegram() {
     if (msg_digitada == "") {
         $('.btn-telegram').attr("href", dataSelect + encodeURIComponent(texto_inserir))
     } else {
-        $('.btn-telegram').attr("href", dataSelect + encodeURIComponent(texto_inserir + "\n\n" + "📝 **__OBS:__**" + "\n\n" + msg_digitada))
+        $('.btn-telegram').attr("href", dataSelect + encodeURIComponent(texto_inserir + "\n\n" + "📝 __OBS:__" + "\n\n" + msg_digitada))
     }
 
 }
