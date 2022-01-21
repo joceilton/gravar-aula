@@ -79,7 +79,7 @@ if (dataHoraAtualFomatada('hora') == '00') {
 }
 
 
-$(".aula").on("keydown", function(evt) {
+/*$(".aula").on("keydown", function(evt) {
     evt = evt || window.event;
     var key = evt.keyCode || evt.which;
     var tecla = String.fromCharCode(key); 
@@ -146,6 +146,10 @@ $(".aula").on("keydown", function(evt) {
 
     }
     
+})*/
+
+$(".tipo_aula").on("change", function(data) {
+  $(".aula").val(data)
 })
 
 
