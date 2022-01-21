@@ -90,54 +90,58 @@ $(".aula").on("keyup", function(evt) {
             var campo = $(this)
             $(this).val("Unit")
             desabilitar(campo)
-        }
+        } else
 
         if (tecla == "W" || tecla == "w") {
             var campo = $(this)
             campo.val("Warm Up")
             desabilitar(campo)
-        }
+        } else
 
         if (tecla == "C" || tecla == "c") {
             var campo = $(this)
             campo.val("Click")
             desabilitar(campo)
-        }
+        } else
 
         if (tecla == "I" || tecla == "i") {
             var campo = $(this)
             campo.val("Intervalo")
             desabilitar(campo)
-        }
+        } else
 
         if (tecla == "O" || tecla == "o") {
             var campo = $(this)
             $(this).val("Oral Test")
             desabilitar(campo)
-        }
+        } else
 
         if (tecla == "N" || tecla == "n") {
             var campo = $(this)
-            campo.val("NM")
+            campo.val("No Show: ")
             desabilitar(campo)
-        }
+        } else
 
         if (tecla == "F" || tecla == "f") {
             var campo = $(this)
             campo.val("Feriado")
             desabilitar(campo)
-        }
+        } else
 
         if (tecla == "R" || tecla == "r") {
             var campo = $(this)
             campo.val("Reunião")
             desabilitar(campo)
-        }
+        } else
 
         if (tecla == "T" || tecla == "t") {
             var campo = $(this)
             campo.val("Teens")
             desabilitar(campo)
+        } else {
+
+            return false
+
         }
 
     }
