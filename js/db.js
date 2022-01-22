@@ -172,8 +172,13 @@ if (dataHoraAtualFomatada('hora') == '00') {
     
 })*/
 
+$(".btn-select-aula").on("click", function() {
+$(".tipo_aula").show().change()
+})
+
 $(".tipo_aula").on("change", function(event) {
 $(".aula").val(event.currentTarget.value)
+$(this).hide()
 })
 
 
