@@ -172,12 +172,12 @@ if (dataHoraAtualFomatada('hora') == '00') {
     
 })*/
 
-$(".btn-select-aula").on("click", function() {
-$(".tipo_aula").trigger("change")
-})
-
 $(".tipo_aula").on("change", function(event) {
+var sl = $(this)
 $(".aula").val(event.currentTarget.value)
+setTimeout(function() {
+sl.val("")
+}, 3000)
 })
 
 
