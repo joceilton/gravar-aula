@@ -178,7 +178,6 @@ $(".tipo_aula").trigger("change")
 
 $(".tipo_aula").on("change", function(event) {
 $(".aula").val(event.currentTarget.value)
-$(this).hide()
 })
 
 
