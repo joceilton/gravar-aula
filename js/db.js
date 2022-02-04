@@ -177,7 +177,7 @@ var sl = $(this)
 $(".aula").val(event.currentTarget.value)
 setTimeout(function() {
 sl.val("")
-}, 3000)
+}, 50)
 })
 
 
