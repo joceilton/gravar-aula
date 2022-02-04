@@ -26,6 +26,8 @@ var qtdAulas
 
 var msg_digitada = ""
 
+aula.focus()
+
 $(".btn_msg").on("click", function() {
     $("div.msg_conteudo").slideToggle('slow')
 })
