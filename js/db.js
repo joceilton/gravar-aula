@@ -175,6 +175,7 @@ if (dataHoraAtualFomatada('hora') == '00') {
 $(".tipo_aula").on("change", function(event) {
 var sl = $(this)
 $(".aula").val(event.currentTarget.value)
+$(".aula").focus()
 setTimeout(function() {
 sl.val("")
 }, 50)
