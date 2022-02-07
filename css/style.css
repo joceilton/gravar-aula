@@ -78,8 +78,15 @@ div.msg_conteudo {
 	display: none;
 }
 
+@media (max-width: 1280px) {
+main.content {
+width: 960px;
+margin: 0 auto;
+}
+}
+
 @media (max-width: 768px) {
 	div.container {
-		padding: 0 20px;
+		padding: 0 8px;
 	}
 }
