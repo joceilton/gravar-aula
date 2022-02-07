@@ -78,14 +78,14 @@ div.msg_conteudo {
 	display: none;
 }
 
-@media (max-width: 1280px) {
+@media (min-width: 1025px) {
 main.content {
 width: 960px;
 margin: 0 auto;
 }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 480px) {
 	div.container {
 		padding: 0 8px;
 	}
