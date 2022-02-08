@@ -20,6 +20,11 @@ a.btnAcao {
 	left: 0;
 }
 
+main.content {
+width: 100vw;
+height: auto;
+}
+
 .bloco-btn {
 	background-color: #000;
 	padding: 10px;
