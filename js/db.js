@@ -377,7 +377,6 @@ function excluir(id) {
 
 $(document).on("click", ".edit", function() {
     var id = $(this).attr("data-id")
-    $(this).parentNode.parentNode.style.background = "#ccc"
     editar(id)
 })
 
