@@ -377,7 +377,7 @@ function excluir(id) {
 
 $(document).on("click", ".edit", function() {
     var id = $(this).attr("data-id")
-    $("table tr").css("background-color", "#fff")
+    $("table tbody tr").css("background-color", "#fff")
     $(this).parent().parent().css("background-color", "#ddd")
     editar(id)
 })
