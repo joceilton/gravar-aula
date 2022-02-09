@@ -26,6 +26,8 @@ var qtdAulas
 
 var msg_digitada = ""
 
+var linhaTabela
+
 aula.focus()
 
 $(".btn_msg").on("click", function() {
@@ -377,8 +379,9 @@ function excluir(id) {
 
 $(document).on("click", ".edit", function() {
     var id = $(this).attr("data-id")
+    linhaTabela = $(this)
     $("table tbody tr").css("background-color", "#fff")
-    $(this).parent().parent().css("background-color", "#ddd")
+    linhaTabela.parent().parent().css("background-color", "#ddd")
     editar(id)
 })
 
@@ -552,6 +555,8 @@ hora.addEventListener("blur", function() {
             verifica = false
 
             msg.innerHTML = "Atualizado com sucesso"
+            
+            linhaTabela.parent().parent().css("background-color", "#ddd")
 
         }
 
