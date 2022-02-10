@@ -202,7 +202,7 @@ function carregarDados() {
 
         if (el.data != "") {
 
-            myHtmlContent = '<tr> <td> ' + formatarData(el.data) + ' </td> <td> ' + el.hora + ' </td> <td> ' + el.aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + el.id + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + el.id + '"> <i class="fa fa-trash"></i> </a> </td> </tr>'
+            myHtmlContent = '<tr data-id=' + el.id +'> <td> ' + formatarData(el.data) + ' </td> <td> ' + el.hora + ' </td> <td> ' + el.aula + ' </td> <td> <a href="#" class="btnAcao edit" data-id = "' + el.id + '"> <i class="fa fa-edit"></i> </a> <a href="#" class="btnAcao excluir" data-id = "' + el.id + '"> <i class="fa fa-trash"></i> </a> </td> </tr>'
 
             dados.prepend(myHtmlContent)
 
@@ -379,9 +379,9 @@ function excluir(id) {
 
 $(document).on("click", ".edit", function() {
     var id = $(this).attr("data-id")
-    linhaTabela = $(this)
+    linhaTabela = $(this).parent().parent().attr("data-id")
     $("table tbody tr").css("background-color", "#fff")
-    linhaTabela.parent().parent().css("background-color", "#ddd")
+    $("table tbody tr[data-id:" + linhaTabela + "]").css("background-color", "#f0f")
     editar(id)
 })
 
