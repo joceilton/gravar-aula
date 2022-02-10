@@ -26,7 +26,7 @@ var qtdAulas
 
 var msg_digitada = ""
 
-var linhaTabela
+var linhaTabela = ""
 
 aula.focus()
 
