@@ -555,8 +555,6 @@ hora.addEventListener("blur", function() {
             verifica = false
 
             msg.innerHTML = "Atualizado com sucesso"
-            
-            linhaTabela.parent().parent().css("background-color", "#ddd")
 
         }
 
